@@ -9,6 +9,8 @@
 
 #include <stdint.h>
 
+#define SCHEDULER_MAX_TASKS 10
+
 typedef struct task
 {
     void (*function)(void);
