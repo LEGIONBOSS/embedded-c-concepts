@@ -5,6 +5,7 @@
 */
 
 #include <stdint.h>
+#include <stdarg.h>
 #include "bitwise.h"
 
 uint8_t test_bit(uint8_t* byte, uint8_t pos)
@@ -41,4 +42,18 @@ void toggle_bit(uint8_t* byte, uint8_t pos)
     {
         *byte ^ (1 << pos);
     }
+}
+
+uint8_t combine_bytes(uint8_t argc, ...)
+{
+    uint8_t result = 0;
+    va_list args;
+    va_start(args, argc);
+    for (uint8_t i = 0; i < argc; i++)
+    {
+        uint8_t value = va_arg(args, uint8_t); 
+        result |= value;
+    }
+    va_end(args);
+    return result;
 }
