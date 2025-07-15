@@ -61,14 +61,14 @@ void scheduler_run_tasks(uint32_t now_ms)
     for (uint32_t i = 0; i < task_count; i++)
     {
         task_t* task = tasks[i];
-        if (task && task->enabled && current_time >= task->next_run)
-        //                                        ^ NOT OVERFLOW SAFE!
+        if (task && task->enabled && (int32_t)(now_ms - task->time_next) >= 0)
+        //                              ^ This limits the maximum size of task->time_interval
         {
             task->function(); // Run task
 
             if (task->time_interval > 0)
             {
-                task->time_next = now_ms + task->time_interval; // Re-schedule
+                task->time_next += task->time_interval; // Re-schedule
             }
             else
             {
