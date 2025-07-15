@@ -9,17 +9,18 @@
 
 #include <stdint.h>
 
-// Task type
 typedef struct task
 {
-    // task function pointer
-    // enabled bool
-    // next_run time (ms)
-    // interval time (ms)
+    void (*function)(void);
+    uint8_t enabled;
+    uint32_t time_next;
+    uint32_t time_interval;
 } task_t;
 
-void scheduler_disable_task(/*task pointer*/);
-void scheduler_add_task(/*task pointer*/);
+task_t* scheduler_create_task(void (*function)(void), uint8_t enabled, uint32_t time_next, uint32_t time_interval);
+void scheduler_add_task(task_t* task);
+void scheduler_enable_task(task_t* task);
+void scheduler_disable_task(task_t* task);
 void scheduler_run_tasks(uint32_t now_ms);
 
 #endif // TASK_SCHEDULER_H
