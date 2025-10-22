@@ -18,16 +18,12 @@ void fn3(void);
 int main(void)
 {
     // Create tasks
-    task_t* task1 = scheduler_create_task(fn1, 1, 1000, 0); // Runs once
-    task_t* task2 = scheduler_create_task(fn2, 1, 0, 500); // Runs periodically
+    task_t* task1 = scheduler_add_task(fn1, 1, 1000, 0); // Runs once
+    task_t* task2 = scheduler_add_task(fn2, 1, 0, 500); // Runs periodically
     if (!task1 || !task2)
     {
         return 1;
     }
-
-    // Add functions to scheduler
-    scheduler_add_task(task1);
-    scheduler_add_task(task2);
 
     while(1)
     {
